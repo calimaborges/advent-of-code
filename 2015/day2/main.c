@@ -3,23 +3,56 @@
 
 #define NUMBER_OF_DIMENSIONS 3
 
-int main() {
-	int total = 0;
+typedef struct {
 	int length, width, height;
-	while (scanf("%dx%dx%d", &length, &width, &height) == NUMBER_OF_DIMENSIONS) {
-		int surface_area = 2 * length * width + 2 * width * height + 2 * height * length;
-		int smallest_area = length * width;
-		if (width * height < smallest_area) {
-			smallest_area = width * height;
-		} 
+} Dimension;
 
-		if (height * length < smallest_area) {
-			smallest_area = height * length;
-		}
+int calculate_surface_area(Dimension dimension) {
+	return 2 * dimension.length * dimension.width  +
+               2 * dimension.width  * dimension.height +
+	       2 * dimension.height * dimension.length;
+}
 
-		total += (surface_area + smallest_area);
+int calculate_smallest_area(Dimension dimension) {
+	int smallest_area = dimension.length * dimension.width;
+	if (dimension.width * dimension.height < smallest_area) {
+		smallest_area = dimension.width * dimension.height;
 	}
 
-	printf("total: %d\n", total);
+	if (dimension.height * dimension.length < smallest_area) {
+		smallest_area = dimension.height * dimension.length;
+	}
+
+	return smallest_area;
+}
+
+int calculate_smallest_distance(Dimension dimension) {
+	int smallest_distance = dimension.length + dimension.width;
+	if (dimension.width + dimension.height < smallest_distance) {
+		smallest_distance = dimension.width + dimension.height;
+	}
+
+	if (dimension.height + dimension.length < smallest_distance) {
+		smallest_distance = dimension.height + dimension.length;
+	}
+	return smallest_distance;
+}
+
+int main() {
+	int total_paper = 0;
+	int total_ribbon = 0;
+
+	Dimension dimension;
+	while (scanf("%dx%dx%d", &(dimension.length), &(dimension.width), &(dimension.height)) == NUMBER_OF_DIMENSIONS) {
+		int surface_area = calculate_surface_area(dimension);
+		int smallest_area = calculate_smallest_area(dimension);
+		total_paper += (surface_area + smallest_area);
+
+		int smallest_distance = calculate_smallest_distance(dimension);	
+		total_ribbon += ((smallest_distance * 2) + (dimension.length * dimension.width * dimension.height));
+	}
+
+	printf("papers: %d\n", total_paper);
+	printf("ribbons: %d\n", total_ribbon);
 	return 0;
 }
