@@ -37,13 +37,21 @@ int count_positions(int positions[MAX_SIZE][MAX_SIZE]) {
 }
 
 int main() { 
+	int counter = 0;
 	int positions[MAX_SIZE][MAX_SIZE] = { 0, };
-	Point current_point = { .x = MAX_SIZE / 2, .y = MAX_SIZE / 2 };
+	Point position_santa = { .x = MAX_SIZE / 2, .y = MAX_SIZE / 2 };
+	Point position_robot = { .x = MAX_SIZE / 2, .y = MAX_SIZE / 2 };
 	char c;
 
 	while ((c = getchar()) != EOF) {
-		positions[current_point.x][current_point.y] += 1;
-		current_point = next_position(current_point, c);	
+		if (counter % 2 == 0) {
+			position_santa = next_position(position_santa, c);
+			positions[position_santa.x][position_santa.y] += 1;
+		} else {
+			position_robot = next_position(position_robot, c);
+			positions[position_robot.x][position_robot.y] += 1;
+		}
+		counter++;
 	}
 
 	printf("%d\n", count_positions(positions));
