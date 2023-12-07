@@ -28,7 +28,7 @@ int main() {
 		printf("%s ", updated_input);
 		md5_string(updated_input, result);
 		print_hash(result);
-		if (starts_with_zeroes(result, 5)) {
+		if (starts_with_zeroes(result, 6)) {
 			printf("found the number is: %d\n", i - 1);
 			break;
 		}
