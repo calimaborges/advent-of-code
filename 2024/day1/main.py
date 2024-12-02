@@ -16,5 +16,9 @@ total_distance = 0
 for i, rli in enumerate(right_location_ids):
     total_distance = total_distance + abs(rli - left_location_ids[i])
 
-print(total_distance)
+total_score = 0
+for left_location in left_location_ids:
+    total_score = total_score + left_location * right_location_ids.count(left_location)
+
+print(total_distance, total_score)
 
